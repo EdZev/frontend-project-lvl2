@@ -1,10 +1,16 @@
 install: install
 
-run:
-	bin/gendiff.js -h
+help:
+	gendiff -h
+
+json:
+	gendiff ./__fixtures__/file1.json ./__fixtures__/file2.json
 
 publish:
 	npm publish --dry-run
 
 lint:
 	npx eslint .
+
+jest:
+	npx --node-arg --experimental-vm-modules jest

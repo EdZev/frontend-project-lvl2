@@ -1,7 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/EdZev/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/EdZev/frontend-project-lvl2/actions)
 
-![test & linter](https://github.com/EdZev/frontend-project-lvl2/workflows/test%20&%20linter/badge.svg)
+![test&linter](https://github.com/EdZev/frontend-project-lvl2/workflows/test&linter/badge.svg)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/e99667804143459a8bfa/maintainability)](https://codeclimate.com/github/EdZev/frontend-project-lvl2/maintainability)
 

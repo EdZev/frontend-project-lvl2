@@ -4,8 +4,8 @@ name: linter
 
 # Trigger the workflow on push or pull request
 on:
-  schedule:
-    - cron: '* * * * *'
+  - push
+  - pull_request
 
 jobs:
   build:

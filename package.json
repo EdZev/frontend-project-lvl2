@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/EdZev/frontend-project-lvl2#readme",
   "devDependencies": {
-    "eslint": "^7.18.0",
+    "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",

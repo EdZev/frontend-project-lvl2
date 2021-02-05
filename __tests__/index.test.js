@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable import/extensions */
 import { test, expect } from '@jest/globals';
 import fs from 'fs';
 import { fileURLToPath } from 'url';

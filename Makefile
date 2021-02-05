@@ -1,4 +1,5 @@
-install: install
+install: 
+	npm install
 
 help:
 	gendiff -h

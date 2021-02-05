@@ -16,6 +16,9 @@
   "engines": {
     "node": ">=14"
   },
+  "scripts": {
+    "test": "npx jest"
+  },
   "author": "EdZev",
   "type": "module",
   "license": "ISC",

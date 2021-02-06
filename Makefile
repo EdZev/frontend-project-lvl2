@@ -7,6 +7,9 @@ help:
 json:
 	gendiff ./__fixtures__/file1.json ./__fixtures__/file2.json
 
+yaml:
+	gendiff ./__fixtures__/file1.yml ./__fixtures__/file2.yml
+
 publish:
 	npm publish --dry-run
 

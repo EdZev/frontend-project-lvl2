@@ -2,36 +2,51 @@ import process from 'process';
 import path from 'path';
 import _ from 'lodash';
 import parsers from './parsers.js';
+import format from './formarters/index.js';
 
-export default (filepath1, filepath2) => {
+const makeDiff = (data) => {
+  const [data1, data2] = data;
+  const [keys1, keys2] = data.map((obj) => Object.keys(obj));
+
+  const jointKeys = _.union(keys1, keys2).sort();
+
+  return jointKeys.reduce((acc, key) => {
+    const newAcc = acc;
+    const dataValue1 = data1[key];
+    const dataValue2 = data2[key];
+    if (_.isObject(dataValue1) && _.isObject(dataValue2)) {
+      return [...newAcc, { key: `${key}`, value: makeDiff([dataValue1, dataValue2]) }];
+    }
+    if (dataValue1 === dataValue2) {
+      return [...newAcc, { key: `${key}`, value: dataValue1 }];
+    }
+    if (_.isObject(dataValue1)) {
+      newAcc.push({ key: `${key}`, status: 'minus', value: makeDiff([dataValue1, dataValue1]) });
+    }
+    if (_.isObject(dataValue2)) {
+      newAcc.push({ key: `${key}`, status: 'plus', value: makeDiff([dataValue2, dataValue2]) });
+    }
+    if (_.has(data1, key) && !_.isObject(dataValue1)) {
+      newAcc.push({ key: `${key}`, status: 'minus', value: dataValue1 });
+    }
+    if (_.has(data2, key) && !_.isObject(dataValue2)) {
+      newAcc.push({ key: `${key}`, status: 'plus', value: dataValue2 });
+    }
+    return newAcc;
+  }, []);
+};
+
+export default (filepath1, filepath2, outputFormat) => {
   const currentDir = process.cwd();
-  const datas = [filepath1, filepath2].map((filepath) => {
+  const dataset = [filepath1, filepath2].map((filepath) => {
     const fullPath = path.resolve(currentDir, filepath);
     const data = parsers(fullPath);
     return data;
   });
-
-  const parseError = datas.find((elem) => typeof elem === 'string');
+  const parseError = dataset.find((elem) => typeof elem === 'string');
   if (parseError) return parseError;
 
-  const [data1, data2] = datas;
-  const [keys1, keys2] = datas.map((data) => Object.keys(data));
+  const diff = makeDiff(dataset);
 
-  const jointKeys = _.union(keys1, keys2).sort();
-
-  const comparisonResult = jointKeys.reduce((acc, key) => {
-    const newAcc = acc;
-    const dataKey1 = data1[key] ?? null;
-    const dataKey2 = data2[key] ?? null;
-    if (dataKey1 === dataKey2) return [...newAcc, `    ${key}: ${dataKey1}`];
-    if (dataKey1 !== null) {
-      newAcc.push(`  - ${key}: ${dataKey1}`);
-    }
-    if (dataKey2 !== null) {
-      newAcc.push(`  + ${key}: ${dataKey2}`);
-    }
-    return newAcc;
-  }, []);
-
-  return `{\n${comparisonResult.join('\n')}\n}`;
+  return format(diff, outputFormat);
 };

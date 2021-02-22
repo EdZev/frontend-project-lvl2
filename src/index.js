@@ -2,7 +2,7 @@ import process from 'process';
 import path from 'path';
 import _ from 'lodash';
 import parsers from './parsers.js';
-import format from './formarters/index.js';
+import format from './formatters/index.js';
 
 const makeDiff = (data) => {
   const [data1, data2] = data;
@@ -22,7 +22,7 @@ const makeDiff = (data) => {
       return { name: key, status: 'removed', value: value1 };
     }
     if (isObject1 && isObject2) {
-      return { name: key, status: 'undefined', value: makeDiff([value1, value2]) };
+      return { name: key, status: 'not defined', value: makeDiff([value1, value2]) };
     }
     if (value1 === value2) {
       return { name: key, status: 'not updated', value: value1 };

@@ -9,6 +9,9 @@
 
 The app conpares two files and shows difference of them
 
+Input formats: 'JSON', 'YAML'.
+Output formats: 'stylish', 'plain', 'json' (default 'stylish').
+
 USAGE EXAMPLE:
 
 Comparison of JSON files, 'stylish' output format
@@ -19,3 +22,6 @@ Comparison of YAML files, 'stylish' output format
 
 Comparison of a JSON file with a YAML file, 'plain' output format
 [![asciicast](https://asciinema.org/a/392922.svg)](https://asciinema.org/a/392922)
+
+Comparison of JSON files, 'json' output format
+[![asciicast](https://asciinema.org/a/393093.svg)](https://asciinema.org/a/393093)

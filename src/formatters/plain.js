@@ -21,7 +21,7 @@ export default (diff) => {
         return `Property ${preparePathStr(name)} was removed\n`;
       case 'updated':
         return `Property ${preparePathStr(name)} was updated. From ${prepareValue(oldValue)} to ${prepareValue(newValue)}\n`;
-      case 'undefined':
+      case 'not defined':
         return iter(value, [...path, name]);
       case 'not updated':
         return null;

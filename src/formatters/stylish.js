@@ -44,7 +44,7 @@ export default (data) => {
           ];
         case 'not updated':
           return buildStr(depth, name, value, isParent(value));
-        case 'undefined':
+        case 'not defined':
           return buildStr(depth, name, iter(value, depth + 1), isParent(value));
         default:
           throw new Error(`${status} - unknown status for ${name}.`);

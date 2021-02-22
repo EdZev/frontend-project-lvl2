@@ -11,8 +11,11 @@ The app conpares two files and shows difference of them
 
 USAGE EXAMPLE:
 
-Comparing JSON files
+Comparison of JSON files, 'stylish' output format
 [![asciicast](https://asciinema.org/a/391168.svg)](https://asciinema.org/a/391168)
 
-Comparing YAML files
+Comparison of YAML files, 'stylish' output format
 [![asciicast](https://asciinema.org/a/391170.svg)](https://asciinema.org/a/391170)
+
+Comparison of a JSON file with a YAML file, 'plain' output format
+[![asciicast](https://asciinema.org/a/392922.svg)](https://asciinema.org/a/392922)

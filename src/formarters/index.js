@@ -1,6 +1,13 @@
 import stylish from './stylish.js';
+import plain from './plain.js';
 
 export default (diff, outputFormat) => {
-  if (outputFormat === 'stylish') return stylish(diff);
-  return 'unknow output format';
+  switch (outputFormat) {
+    case 'stylish':
+      return stylish(diff);
+    case 'plain':
+      return plain(diff);
+    default:
+      return 'Unknow output format';
+  }
 };

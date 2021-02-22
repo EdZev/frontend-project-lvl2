@@ -10,30 +10,27 @@ const makeDiff = (data) => {
 
   const jointKeys = _.union(keys1, keys2).sort();
 
-  return jointKeys.reduce((acc, key) => {
-    const newAcc = acc;
-    const dataValue1 = data1[key];
-    const dataValue2 = data2[key];
-    if (_.isObject(dataValue1) && _.isObject(dataValue2)) {
-      return [...newAcc, { key: `${key}`, value: makeDiff([dataValue1, dataValue2]) }];
+  return jointKeys.map((key) => {
+    const value1 = data1[key];
+    const value2 = data2[key];
+    const isObject1 = _.isObject(value1);
+    const isObject2 = _.isObject(value2);
+    if (!_.has(data1, key)) {
+      return { name: key, status: 'added', value: value2 };
     }
-    if (dataValue1 === dataValue2) {
-      return [...newAcc, { key: `${key}`, value: dataValue1 }];
+    if (!_.has(data2, key)) {
+      return { name: key, status: 'removed', value: value1 };
     }
-    if (_.isObject(dataValue1)) {
-      newAcc.push({ key: `${key}`, status: 'minus', value: makeDiff([dataValue1, dataValue1]) });
+    if (isObject1 && isObject2) {
+      return { name: key, status: 'undefined', value: makeDiff([value1, value2]) };
     }
-    if (_.isObject(dataValue2)) {
-      newAcc.push({ key: `${key}`, status: 'plus', value: makeDiff([dataValue2, dataValue2]) });
+    if (value1 === value2) {
+      return { name: key, status: 'not updated', value: value1 };
     }
-    if (_.has(data1, key) && !_.isObject(dataValue1)) {
-      newAcc.push({ key: `${key}`, status: 'minus', value: dataValue1 });
-    }
-    if (_.has(data2, key) && !_.isObject(dataValue2)) {
-      newAcc.push({ key: `${key}`, status: 'plus', value: dataValue2 });
-    }
-    return newAcc;
-  }, []);
+    return {
+      name: key, status: 'updated', oldValue: value1, newValue: value2,
+    };
+  });
 };
 
 export default (filepath1, filepath2, outputFormat) => {

@@ -4,14 +4,14 @@ install:
 help:
 	gendiff -h
 
-stylish:
-	gendiff ./__fixtures__/file1.json ./__fixtures__/file2.json
-
 json:
 	gendiff ./__fixtures__/file1.json ./__fixtures__/file2.json
 
-yaml:
-	gendiff ./__fixtures__/file1.yml ./__fixtures__/file2.yml
+stylish:
+	gendiff -f stylish ./__fixtures__/file1.json ./__fixtures__/file2.json
+
+plain:
+	gendiff -f plain ./__fixtures__/file1.yml ./__fixtures__/file2.json
 
 publish:
 	npm publish --dry-run

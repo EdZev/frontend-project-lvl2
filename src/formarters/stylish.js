@@ -1,25 +1,53 @@
 import _ from 'lodash';
 
-const buildStr = (rowData, status, isObject) => {
-  const [key, value, space, depth, fn] = rowData;
-  if (isObject) {
-    return `\n${space}  ${status} ${key}: {${fn(value, depth + 1)}\n${space}    }`;
+const isParent = (obj) => _.isObject(obj);
+
+const buildStr = (depth, name, value, parent, status = 'default') => {
+  const statusStr = {
+    added: '+',
+    removed: '-',
+    default: ' ',
+  };
+  const space = ' ';
+  const mainIndent = space.repeat(2);
+  const indent = space.repeat(4 * depth);
+
+  if (!parent) {
+    return `\n${mainIndent}${indent}${statusStr[status]} ${name}: ${value}`;
   }
-  return `\n${space}  ${status} ${key}: ${value}`;
+
+  if (!_.isObject(value)) {
+    return `\n${mainIndent}${indent}${statusStr[status]} ${name}: {${value}\n${mainIndent.repeat(2)}${indent}}`;
+  }
+
+  const parsedChildren = Object.keys(value)
+    .map((key) => buildStr(depth + 1, key, value[key], isParent(value[key])))
+    .join('');
+  return buildStr(depth, name, parsedChildren, true, status);
 };
+
 export default (data) => {
   const iter = (arr, depth) => {
-    const space = '    '.repeat(depth);
-    const format = arr.map((elem) => {
-      const { key, status, value } = elem;
-      const rowData = [key, value, space, depth, iter];
+    const format = arr.flatMap((elem) => {
+      const {
+        name, status, value, oldValue, newValue,
+      } = elem;
       switch (status) {
-        case 'minus':
-          return (_.isObject(value)) ? buildStr(rowData, '-', true) : buildStr(rowData, '-', false);
-        case 'plus':
-          return (_.isObject(value)) ? buildStr(rowData, '+', true) : buildStr(rowData, '+', false);
+        case 'added':
+          return buildStr(depth, name, value, isParent(value), 'added');
+        case 'removed':
+          return buildStr(depth, name, value, isParent(value), 'removed');
+        case 'updated':
+          return [
+            buildStr(depth, name, oldValue, isParent(oldValue), 'removed'),
+            buildStr(depth, name, newValue, isParent(newValue), 'added'),
+          ];
+        case 'not updated':
+          return buildStr(depth, name, value, isParent(value));
+        case 'undefined':
+          return buildStr(depth, name, iter(value, depth + 1), isParent(value));
         default:
-          return (_.isObject(value)) ? buildStr(rowData, ' ', true) : buildStr(rowData, ' ', false);
+          throw new Error(`${status} - unknown status for ${name}.`);
       }
     });
     return `${format.join('')}`;

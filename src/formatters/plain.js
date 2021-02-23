@@ -16,11 +16,11 @@ export default (diff) => {
 
     switch (status) {
       case 'added':
-        return `Property ${preparePathStr(name)} was added with value: ${prepareValue(value)}\n`;
+        return `Property ${preparePathStr(name)} was added with value: ${prepareValue(value)}`;
       case 'removed':
-        return `Property ${preparePathStr(name)} was removed\n`;
+        return `Property ${preparePathStr(name)} was removed`;
       case 'updated':
-        return `Property ${preparePathStr(name)} was updated. From ${prepareValue(oldValue)} to ${prepareValue(newValue)}\n`;
+        return `Property ${preparePathStr(name)} was updated. From ${prepareValue(oldValue)} to ${prepareValue(newValue)}`;
       case 'unknown':
         return iter(children, [...path, name]);
       case 'unupdated':
@@ -29,5 +29,5 @@ export default (diff) => {
         throw new Error(`${status} - unknown status for ${name}.`);
     }
   }).filter((elem) => elem !== null);
-  return iter(diff, []).join('');
+  return iter(diff, []).join('\n');
 };

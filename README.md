@@ -24,4 +24,4 @@ Comparison of a JSON file with a YAML file, 'plain' output format
 [![asciicast](https://asciinema.org/a/392922.svg)](https://asciinema.org/a/392922)
 
 Comparison of JSON files, 'json' output format
-[![asciicast](https://asciinema.org/a/393093.svg)](https://asciinema.org/a/393093)
+[![asciicast](https://asciinema.org/a/393599.svg)](https://asciinema.org/a/393599)

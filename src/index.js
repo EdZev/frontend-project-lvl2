@@ -2,7 +2,7 @@ import process from 'process';
 import path from 'path';
 import _ from 'lodash';
 import parsers from './parsers.js';
-import format from './formatters/index.js';
+import formater from './formatters/index.js';
 
 const makeDiff = (data1, data2) => {
   const keys1 = Object.keys(data1);
@@ -31,7 +31,7 @@ const makeDiff = (data1, data2) => {
   });
 };
 
-export default (filepath1, filepath2, outputFormat) => {
+export default (filepath1, filepath2, outputFormat = 'stylish') => {
   const currentDir = process.cwd();
 
   const fullPath1 = path.resolve(currentDir, filepath1);
@@ -42,5 +42,5 @@ export default (filepath1, filepath2, outputFormat) => {
 
   const diff = makeDiff(data1, data2);
 
-  return format(diff, outputFormat);
+  return formater(diff, outputFormat);
 };

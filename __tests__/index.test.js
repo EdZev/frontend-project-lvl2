@@ -23,6 +23,7 @@ const outputFormats = [
   ['yml', 'stylish', 'expectedStylish.txt'],
   ['yml', 'plain', 'expectedPlain.txt'],
   ['yml', 'json', 'expectedJson.txt'],
+  ['yml', undefined, 'expectedStylish.txt'],
 ];
 
 describe('Test genDiff, each input file format', () => {

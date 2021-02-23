@@ -8,9 +8,10 @@ const makeDiff = (data1, data2) => {
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
 
-  const jointKeys = _.union(keys1, keys2).sort();
+  const jointKeys = _.union(keys1, keys2);
+  const keys = _.sortBy(jointKeys);
 
-  return jointKeys.map((key) => {
+  return keys.map((key) => {
     const value1 = data1[key];
     const value2 = data2[key];
     if (!_.has(data1, key)) {

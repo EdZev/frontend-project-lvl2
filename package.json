@@ -18,6 +18,10 @@
   },
   "author": "EdZev",
   "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/EdZev/frontend-project-lvl2/issues"

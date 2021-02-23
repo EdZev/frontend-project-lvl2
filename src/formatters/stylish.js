@@ -30,7 +30,7 @@ export default (data) => {
   const iter = (arr, depth) => {
     const format = arr.flatMap((elem) => {
       const {
-        name, status, value, oldValue, newValue,
+        name, status, value, oldValue, newValue, children,
       } = elem;
       switch (status) {
         case 'added':
@@ -42,10 +42,10 @@ export default (data) => {
             buildStr(depth, name, oldValue, isParent(oldValue), 'removed'),
             buildStr(depth, name, newValue, isParent(newValue), 'added'),
           ];
-        case 'not updated':
+        case 'unupdated':
           return buildStr(depth, name, value, isParent(value));
-        case 'not defined':
-          return buildStr(depth, name, iter(value, depth + 1), isParent(value));
+        case 'unknown':
+          return buildStr(depth, name, iter(children, depth + 1), isParent(children));
         default:
           throw new Error(`${status} - unknown status for ${name}.`);
       }

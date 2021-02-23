@@ -48,27 +48,3 @@ describe('Test genDiff, each output format', () => {
     },
   );
 });
-
-describe('Test genDiff, error handling', () => {
-  test('Unknown format of file', () => {
-    const unknownFormatFile = 'file2.cdr';
-    const filePath1 = getFixturePath('file1.json');
-    const filePath2 = getFixturePath(unknownFormatFile);
-    const expected = `Unknown format of file: ${filePath2}`;
-    expect(genDiff(filePath1, filePath2, 'stylish')).toBe(expected);
-  });
-  test('No such file or directory', () => {
-    const unknownFile = 'something';
-    const filePath1 = getFixturePath('file1.json');
-    const filePath2 = getFixturePath(unknownFile);
-    const expected = `No such file or directory: ${filePath2}`;
-    expect(genDiff(filePath1, filePath2, 'stylish')).toBe(expected);
-  });
-  test('Unknow output format', () => {
-    const outputFormat = 'something';
-    const filePath1 = getFixturePath('file1.json');
-    const filePath2 = getFixturePath('file2.json');
-    const expected = `Unknow output format: ${outputFormat}`;
-    expect(genDiff(filePath1, filePath2, outputFormat)).toBe(expected);
-  });
-});

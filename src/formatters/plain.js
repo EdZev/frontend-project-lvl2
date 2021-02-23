@@ -3,7 +3,7 @@ import _ from 'lodash';
 export default (diff) => {
   const iter = (data, path) => data.flatMap((elem) => {
     const {
-      name, status, value, oldValue, newValue,
+      name, status, value, oldValue, newValue, children,
     } = elem;
 
     const prepareValue = (currentValue) => {
@@ -21,9 +21,9 @@ export default (diff) => {
         return `Property ${preparePathStr(name)} was removed\n`;
       case 'updated':
         return `Property ${preparePathStr(name)} was updated. From ${prepareValue(oldValue)} to ${prepareValue(newValue)}\n`;
-      case 'not defined':
-        return iter(value, [...path, name]);
-      case 'not updated':
+      case 'unknown':
+        return iter(children, [...path, name]);
+      case 'unupdated':
         return null;
       default:
         throw new Error(`${status} - unknown status for ${name}.`);

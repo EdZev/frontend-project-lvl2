@@ -15,6 +15,6 @@ export default (filePath) => {
         return `Unknown format of file: ${filePath}`;
     }
   } catch (error) {
-    return `No such file or directory: ${filePath}`;
+    return console.error();
   }
 };

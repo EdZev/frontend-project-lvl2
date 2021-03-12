@@ -32,7 +32,7 @@ const makeDiff = (data1, data2) => {
   });
 };
 
-export default (filepath1, filepath2, outputFormat = 'stylish') => {
+export default (filepath1, filepath2, outputFormat) => {
   const currentDir = process.cwd();
 
   const fullPath1 = path.resolve(currentDir, filepath1);
